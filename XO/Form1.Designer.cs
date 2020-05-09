@@ -45,11 +45,11 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(220, 136);
+            this.checkBox1.Location = new System.Drawing.Point(60, 208);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(80, 17);
+            this.checkBox1.Size = new System.Drawing.Size(145, 17);
             this.checkBox1.TabIndex = 0;
-            this.checkBox1.Text = "checkBox1";
+            this.checkBox1.Text = "Играть с компьютером";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel1
@@ -67,7 +67,7 @@
             this.tableLayoutPanel1.Controls.Add(this.button2_0, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.button2_1, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.button2_2, 2, 2);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(357, 238);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 12);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
@@ -170,7 +170,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(260, 235);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.checkBox1);
             this.Name = "Form1";

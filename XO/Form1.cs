@@ -19,26 +19,26 @@ namespace XO
         {
             InitializeComponent();
         }
-        private void button_Click(object sender, EventArgs e)
-        {
-            Button b = (Button)sender;
-            int i = int.Parse(b.Name[6].ToString());
-            int j = int.Parse(b.Name[8].ToString());
+        //private void button_Click(object sender, EventArgs e)
+        //{
+        //    Button b = (Button)sender;
+        //    int i = int.Parse(b.Name[6].ToString());
+        //    int j = int.Parse(b.Name[8].ToString());
 
-            if (mass[i, j] == 0)
-            {
-                changeButton(b, i, j, player);
-                if ((checkBox1.Checked) && (!haveWinner))
-                {
-                    getPoint(ref i, ref j);
-                    changeButton(b, i, j, false);
-                }
-                else
-                {
-                    player = !player;
-                }
-            }
-        }
+        //    if (mass[i, j] == 0)
+        //    {
+        //        changeButton(b, i, j, player);
+        //        if ((checkBox1.Checked) && (!haveWinner))
+        //        {
+        //            getPoint(ref i, ref j);
+        //            changeButton(b, i, j, false);
+        //        }
+        //        else
+        //        {
+        //            player = !player;
+        //        }
+        //    }
+        //}
 
         private void changeButton(Button b, int i, int j, bool player)
         {
@@ -49,6 +49,7 @@ namespace XO
             mass[i, j] = (player ? 1 : 2);
             checkWinner(player);
         }
+
         private void getPoint(ref int i, ref int j)
         {
             Random rand = new Random();
@@ -86,7 +87,7 @@ namespace XO
                     for (int k = 0; k < 3; k++)
                         for (int j = 0; j < 3; j++)
                         {
-                            (this.Controls[string.Format("button{0}_{1}", k, j)] as Button).Enabled = false;
+                            (tableLayoutPanel1.Controls[string.Format("button{0}_{1}", k, j)] as Button).Enabled = false;
                         }
                     if (i == 8)
                     {
@@ -95,14 +96,14 @@ namespace XO
                     if (player)
                     {
                         if (checkBox1.Checked)
-                            MessageBox.Show("вы выиграли!!!");
-                        else MessageBox.Show("игрок X выиграл!!!");
+                            MessageBox.Show("Вы выиграли!");
+                        else MessageBox.Show("Игрок X выиграл!");
                     }
                     else
                     {
                         if (checkBox1.Checked)
-                            MessageBox.Show("вы проиграли!!!");
-                        else MessageBox.Show("игрок O выиграл!!!");
+                            MessageBox.Show("Вы проиграли!");
+                        else MessageBox.Show("Игрок O выиграл!");
                     }
                     break;
                 }
@@ -111,16 +112,16 @@ namespace XO
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            for (int i = 0; i < 3; i++)
-                for (int j = 0; j < 3; j++)
-                {
-                    Button bt = new Button();
-                    bt.Location = new System.Drawing.Point(30 * i + 10 * (i + 1), 30 * j + 10 * (j + 1));
-                    bt.Name = String.Format("button{0}_{1}", i, j);
-                    bt.Size = new System.Drawing.Size(30, 30);
-                    bt.Click += new System.EventHandler(this.button_Click);
-                    this.Controls.Add(bt);
-                }
+            //for (int i = 0; i < 3; i++)
+            //    for (int j = 0; j < 3; j++)
+            //    {
+            //        Button bt = new Button();
+            //        bt.Location = new System.Drawing.Point(30 * i + 10 * (i + 1), 30 * j + 10 * (j + 1));
+            //        bt.Name = String.Format("button{0}_{1}", i, j);
+            //        bt.Size = new System.Drawing.Size(30, 30);
+            //        bt.Click += new System.EventHandler(this.button_Click);
+            //        this.Controls.Add(bt);
+            //    }
 
         }
 
