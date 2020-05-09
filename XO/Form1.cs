@@ -20,6 +20,7 @@ namespace XO
 
         private void ClickedButton(Button button, int i, int j)
         {
+            checkBox1.Enabled = false;
             if (_fieldArray[i, j] != 0) return;
 
             ChangeButton(button, i, j);
@@ -165,6 +166,7 @@ namespace XO
             ChangeButtonsStatus(true);
             HaveWinner = false;
             _player = true;
+            checkBox1.Enabled = true;
         }
 
 
