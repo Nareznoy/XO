@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -12,9 +13,12 @@ namespace XO
 {
     public partial class Form1 : Form
     {
-        public int[,] mass = new int[3, 3];
-        private bool haveWinner = false;
-        private bool player = true;
+        private int[,] _fieldArray = new int[3, 3];
+        private bool _haveWinner = false;
+        private bool _player = true;
+
+        public bool HaveWinner { get { return _haveWinner; } }
+
         public Form1()
         {
             InitializeComponent();
@@ -46,14 +50,14 @@ namespace XO
             //либо так
             //b.Image = (player ? img : img2);
             b.Update();
-            mass[i, j] = (player ? 1 : 2);
+            _fieldArray[i, j] = (player ? 1 : 2);
             checkWinner(player);
         }
 
         private void getPoint(ref int i, ref int j)
         {
             Random rand = new Random();
-            while (mass[i, j] != 0)
+            while (_fieldArray[i, j] != 0)
             {
                 i = rand.Next(0, 3);
                 j = rand.Next(0, 3);
@@ -67,45 +71,107 @@ namespace XO
             for (int i = 0; i < done.Length; i++) done[i] = true;
             for (int i = 0; i < 3; i++)
             {
-                if (mass[i, i] != val) done[6] = false;
-                if (mass[i, 2 - i] != val) done[7] = false;
+                if (_fieldArray[i, i] != val) done[6] = false;
+                if (_fieldArray[i, 2 - i] != val) done[7] = false;
                 for (int j = 0; j < 3; j++)
                 {
-                    if (mass[i, j] != val)
+                    if (_fieldArray[i, j] != val)
                     {
                         done[i] = false;
                     }
-                    if (mass[j, i] != val) done[i + 3] = false;
-                    if (mass[i, j] == 0) done[8] = false;
+                    if (_fieldArray[j, i] != val) done[i + 3] = false;
+                    if (_fieldArray[i, j] == 0) done[8] = false;
                 }
             }
             for (int i = 0; i < done.Length; i++)
             {
                 if (done[i] == true)
                 {
-                    haveWinner = true;
-                    for (int k = 0; k < 3; k++)
-                        for (int j = 0; j < 3; j++)
-                        {
-                            (tableLayoutPanel1.Controls[string.Format("button{0}_{1}", k, j)] as Button).Enabled = false;
-                        }
+                    _haveWinner = true;
+                    
+                    clearField();
+
+                    changeButtonStatus(false);
+
                     if (i == 8)
                     {
-                        MessageBox.Show("Ничья!!!");
+                        //MessageBox.Show("Ничья!!!");
+                        WinnerForm winnerForm = new WinnerForm(this, "Ничья!");
+                        winnerForm.ShowDialog();
+                        return;
                     }
                     if (player)
                     {
                         if (checkBox1.Checked)
-                            MessageBox.Show("Вы выиграли!");
-                        else MessageBox.Show("Игрок X выиграл!");
+                        {
+                            //MessageBox.Show("Вы выиграли!");
+                            WinnerForm winnerForm = new WinnerForm(this, "Вы выиграли!");
+                            winnerForm.ShowDialog();
+                            return;
+                        }
+                        else
+                        {
+                            //MessageBox.Show("Игрок X выиграл!");
+                            WinnerForm winnerForm = new WinnerForm(this, "Игрок X выиграл!");
+                            winnerForm.ShowDialog();
+                            return;
+                        }
                     }
                     else
                     {
                         if (checkBox1.Checked)
-                            MessageBox.Show("Вы проиграли!");
-                        else MessageBox.Show("Игрок O выиграл!");
+                        {
+                            //MessageBox.Show("Вы проиграли!");
+                            WinnerForm winnerForm = new WinnerForm(this, "Вы проиграли!");
+                            winnerForm.ShowDialog();
+                            return;
+                        }
+                        else
+                        {
+                            //MessageBox.Show("Игрок O выиграл!");
+                            WinnerForm winnerForm = new WinnerForm(this, "Игрок O выиграл!");
+                            winnerForm.ShowDialog();
+                            return;
+                        }
                     }
-                    break;
+                }
+            }
+        }
+
+        public void newGame()
+        {
+            clearField();
+            changeButtonStatus(true);
+            _haveWinner = false;
+            _player = true;
+        }
+
+        private void changeButtonStatus(bool status)
+        {
+            for (int k = 0; k < 3; k++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    (tableLayoutPanel1.Controls[string.Format("button{0}_{1}", k, j)] as Button).Enabled = status;
+                }
+            }
+        }
+
+        private void clearField()
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    _fieldArray[i, j] = 0;
+                }
+            }
+
+            for (int k = 0; k < 3; k++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    (tableLayoutPanel1.Controls[string.Format("button{0}_{1}", k, j)] as Button).Text = "";
                 }
             }
         }
@@ -150,10 +216,10 @@ namespace XO
 
         private void clickedButton(Button button, int i, int j)
         {
-            if (mass[i, j] == 0)
+            if (_fieldArray[i, j] == 0)
             {
-                changeButton(button, i, j, player);
-                if ((checkBox1.Checked) && (!haveWinner))
+                changeButton(button, i, j, _player);
+                if ((checkBox1.Checked) && (!_haveWinner))
                 {
                     getPoint(ref i, ref j);
                     button = getButton(i, j);
@@ -161,7 +227,7 @@ namespace XO
                 }
                 else
                 {
-                    player = !player;
+                    _player = !_player;
                 }
             }
         }
