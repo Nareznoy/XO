@@ -143,8 +143,8 @@ namespace XO
         private void ChangeButtonsStatus(bool status)
         {
             for (var k = 0; k < 3; k++)
-            for (var j = 0; j < 3; j++)
-                ((Button)tableLayoutPanel1.Controls[$"button{k}_{j}"]).Enabled = status;
+                for (var j = 0; j < 3; j++)
+                    ((Button)tableLayoutPanel1.Controls[$"button{k}_{j}"]).Enabled = status;
         }
 
 
@@ -170,13 +170,13 @@ namespace XO
 
         private void ClearField()
         {
-            for (var i = 0; i < 3; i++)
-            for (var j = 0; j < 3; j++)
-                _fieldArray[i, j] = 0;
+            for (var i = 0; i < 3; i++) 
+                for (var j = 0; j < 3; j++)
+                    _fieldArray[i, j] = 0;
 
             for (var k = 0; k < 3; k++)
-            for (var j = 0; j < 3; j++)
-                ((Button) tableLayoutPanel1.Controls[$"button{k}_{j}"]).Text = "";
+                for (var j = 0; j < 3; j++)
+                    ((Button) tableLayoutPanel1.Controls[$"button{k}_{j}"]).Text = "";
         }
     }
 }
